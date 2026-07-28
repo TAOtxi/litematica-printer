@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, 'SKIP') }}
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       GH_USERNAME: ${{ secrets.GH_USERNAME }}
     steps:
       - name: Checkout repository

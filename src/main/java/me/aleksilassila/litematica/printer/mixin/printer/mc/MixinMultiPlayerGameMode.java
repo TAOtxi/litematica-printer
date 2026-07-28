@@ -71,6 +71,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         }
         //#if MC > 11802
         litematica_printer$startPrediction((sequence) -> new ServerboundUseItemOnPacket(hand, blockHit, sequence));
+        this.minecraft.player.swing(hand);
         //#else
         //$$ litematica_printer$startPrediction((sequence) -> new ServerboundUseItemOnPacket(hand, blockHit));
         //#endif
