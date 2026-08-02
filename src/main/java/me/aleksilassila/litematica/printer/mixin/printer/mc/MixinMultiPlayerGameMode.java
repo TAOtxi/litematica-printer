@@ -129,7 +129,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         if (player.getAbilities().instabuild) {
             PacketUtils.sendPacket(i -> {
                 if (localPrediction) {
-                    this.minecraft.player.swing(hand);
+                    this.minecraft.player.swing(InteractionHand.MAIN_HAND);
                     destroyBlock(blockPos);
                 }
                 return litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, direction, i);
@@ -155,7 +155,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
                 (Configs.Break.BREAK_INSTANT_MINE.getBooleanValue() && destroyProgress > 0.5F)
         ) {
             if (localPrediction) {
-                this.minecraft.player.swing(hand);
+                this.minecraft.player.swing(InteractionHand.MAIN_HAND);
                 destroyBlock(blockPos);
             }
 
@@ -201,7 +201,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         if (player.getAbilities().instabuild && level.getWorldBorder().isWithinBounds(blockPos)) {
             PacketUtils.sendPacket(sequence -> {
                 if (localPrediction) {
-                    this.minecraft.player.swing(hand);
+                    this.minecraft.player.swing(InteractionHand.MAIN_HAND);
                     destroyBlock(blockPos);
                 };
                 return litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, direction, sequence);
@@ -229,7 +229,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
                 this.isDestroying = false;
                 PacketUtils.sendPacket(sequence -> {
                     if (localPrediction) {
-                        this.minecraft.player.swing(hand);
+                        this.minecraft.player.swing(InteractionHand.MAIN_HAND);
                         destroyBlock(blockPos);
                     };
                     return litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, blockPos, direction, sequence);
