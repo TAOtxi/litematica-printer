@@ -89,6 +89,7 @@ $RECYCLE.BIN/
 *profile*
 
 # AI 辅助开发工具/配置
+.workbuddy/
 .github/copilot-instructions.md
 .trae/
 AGENTS.md
