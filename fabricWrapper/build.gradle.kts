@@ -20,7 +20,8 @@ base {
     archivesName.set("$modArchivesBaseName-versionpack")
 }
 
-val fabricSubprojects = rootProject.subprojects.filter { it.name != "fabricWrapper" }
+// 只打包 26.2
+val fabricSubprojects = rootProject.subprojects.filter { it.name == "26.2" }
 
 fabricSubprojects.forEach {
     evaluationDependsOn(":${it.name}")
