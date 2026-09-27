@@ -13,12 +13,15 @@ on:
 
 permissions:
   contents: write
+  packages: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 依赖来自另一个仓库（BiliXWhite/remote-inventory-next）的 Packages，
+      # GITHUB_TOKEN 读不到，必须用有 read:packages 的 PAT
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GH_USERNAME: ${{ secrets.GH_USERNAME }}
       IS_THIS_RELEASE: true
     steps:

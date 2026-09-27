@@ -8,3 +8,5 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       pr_build: true
+    # 不继承的话 secrets.GH_TOKEN 会是空值，拉不到 GitHub Packages 上的依赖
+    secrets: inherit
