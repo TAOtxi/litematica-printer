@@ -29,6 +29,8 @@
   "litematica-printer.config.breakLimiter.desc": "挖掘限制規則來源：\n§dTweakeroo預設§r：使用Tweakeroo模組的挖掘限制規則\n§d自訂§r：使用印表機的自訂挖掘限制規則。",
   "litematica-printer.config.breakProgressThreshold": "挖掘進度閾值",
   "litematica-printer.config.breakProgressThreshold.desc": "挖掘方塊時的進度閾值，達到該百分比後判定挖掘完成。\n數值越高，挖掘效率越低；數值越低，挖掘效率越快。\n因為第一個遊戲刻後破壞進度達到70%%%%，伺服器就會視為挖掘完成，然後等待結束挖掘數據包的接收，\n所以在沒有額外挖掘偵測的伺服器上你可以調低它。",
+  "litematica-printer.config.breakSwing": "破壞揮手動畫",
+  "litematica-printer.config.breakSwing.desc": "破壞方塊時播放揮手動畫並發送揮手數據包(與原版挖掘行為一致)。\n部分反作弊(如 Matrix)會偵測「未揮手破壞方塊」並回滾方塊，建議保持開啟。\n關閉後不再發送揮手包，可略微減少發包量。",
   "litematica-printer.config.breakUsePacket": "挖掘使用數據包",
   "litematica-printer.config.breakUsePacket.desc": "用發送挖掘數據包代替常規挖掘邏輯，在玄學上可以加快挖掘效率。",
   "litematica-printer.config.breakWhitelist": "自訂白名單",

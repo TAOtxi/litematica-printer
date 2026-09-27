@@ -256,6 +256,11 @@ public class Configs extends ConfigBuilders implements IConfigHandler {
                 .defaultValue(false)
                 .build();
 
+        // 破坏方块时播放挥手动画
+        public static final ConfigBoolean BREAK_SWING = booleanValue("breakSwing")
+                .defaultValue(true)
+                .build();
+
         // 模式限制器
         public static final ConfigOptionList BREAK_LIMITER = optionList("breakLimiter")
                 .defaultValue(MiningFilterType.CUSTOM)
@@ -285,6 +290,7 @@ public class Configs extends ConfigBuilders implements IConfigHandler {
                 BREAK_BLOCKS_PER_TICK,
                 BREAK_COOLDOWN,
                 BREAK_PROGRESS_THRESHOLD,
+                BREAK_SWING,
                 // 限制器
                 BREAK_LIMITER,
                 BREAK_LIMIT,

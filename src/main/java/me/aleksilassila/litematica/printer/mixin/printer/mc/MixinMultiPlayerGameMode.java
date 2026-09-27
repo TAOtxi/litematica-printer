@@ -106,6 +106,23 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
     }
 
     /**
+     * 播放挥手动画并发送挥手数据包。
+     * <p>
+     * 原版挖掘流程里 {@code Minecraft#doAttack} 与 {@code Minecraft#handleBlockBreaking}
+     * 都会调用 {@code player.swing(MAIN_HAND)}，因此服务端每刻都能收到挥手包。
+     * 打印机此前只在放置方块时挥手，破坏方块不挥手，会被 Matrix 一类的反作弊判定为
+     * "未挥手破坏方块"并回滚方块。
+     */
+    @Unique
+    private void litematica_printer$swingHand() {
+        if (!Configs.Break.BREAK_SWING.getBooleanValue()) return;
+        LocalPlayer player = this.minecraft.player;
+        if (player != null) {
+            player.swing(InteractionHand.MAIN_HAND);
+        }
+    }
+
+    /**
      * 开始挖掘方块的核心方法
      * 处理权限检查、创造模式特殊逻辑、生存模式挖掘进度初始化
      * 
@@ -127,6 +144,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         }
 
         if (player.getAbilities().instabuild) {
+            litematica_printer$swingHand();
             PacketUtils.sendPacket(i -> {
                 if (localPrediction) {
                     destroyBlock(blockPos);
@@ -158,6 +176,8 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
             }
 
 
+            litematica_printer$swingHand();
+
             PacketUtils.sendPacket(sequence -> litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, direction, sequence));
             PacketUtils.sendPacket(sequence -> litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, blockPos, direction, sequence));
             // 保守一点使用0.6,只测试了0.583333这个数值
@@ -181,6 +201,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         }
         
         // 发送开始破坏包
+        litematica_printer$swingHand();
         PacketUtils.sendPacket(sequence -> litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, direction, sequence));
         
         return BlockBreakResult.IN_PROGRESS;
@@ -197,6 +218,7 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
         }
 
         if (player.getAbilities().instabuild && level.getWorldBorder().isWithinBounds(blockPos)) {
+            litematica_printer$swingHand();
             PacketUtils.sendPacket(sequence -> {
                 if (localPrediction) destroyBlock(blockPos);
                 return litematica_printer$GetServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, direction, sequence);
@@ -219,6 +241,9 @@ public abstract class MixinMultiPlayerGameMode implements MultiPlayerGameModeExt
 
             this.destroyProgress += blockState.getDestroyProgress(player, level, blockPos);
             boolean completed = this.destroyProgress >= litematica_printer$GetBreakingProgressMax();
+
+            // 与原版 handleBlockBreaking 一致：挖掘过程中每刻都挥手
+            litematica_printer$swingHand();
 
             if (completed) {
                 this.isDestroying = false;
